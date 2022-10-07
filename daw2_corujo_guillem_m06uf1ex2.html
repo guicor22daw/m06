@@ -1,0 +1,130 @@
+<!--  Guillem Corujo Garcia
+      DAW2 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="ca">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>Càlcul de temperatures tats mitjanes</title>
+  </head>
+  <body>
+    <p>
+      <b><u>APLICACIÓ PEL CÀLCUL DE TEMPERATURES MITJANES</u></b>
+    </p>
+    <b>a) Introudeix les dades de temperatura (Celsius):<br /></b>
+    <table>
+      <tbody>
+        <tr>
+          <td>Mostra de Temperatura 1:</td>
+          <td>
+            <input type="text" name="temp[]" size="5" maxlength="6" value="0" />
+          </td>
+          <td>Mostra de Temperatura 2:</td>
+          <td>
+            <input type="text" name="temp[]" size="5" maxlength="6" value="0" />
+          </td>
+        </tr>
+        <tr>
+          <td>Mostra de Temperatura 3:</td>
+          <td>
+            <input type="text" name="temp[]" size="5" maxlength="6" value="0" />
+          </td>
+          <td>Mostra de Temperatura 4:</td>
+          <td>
+            <input type="text" name="temp[]" size="5" maxlength="6" value="0" />
+          </td>
+        </tr>
+        <tr>
+          <td>Mostra de Temperatura 5:</td>
+          <td>
+            <input type="text" name="temp[]" size="5" maxlength="6" value="0" />
+          </td>
+          <td>Mostra de Temperatura 6:</td>
+          <td>
+            <input type="text" name="temp[]" size="5" maxlength="6" value="0" />
+          </td>
+        </tr>
+        <tr>
+          <td>Mostra de Temperatura 7:</td>
+          <td>
+            <input type="text" name="temp[]" size="5" maxlength="6" value="0" />
+          </td>
+          <td>Mostra de Temperatura 8:</td>
+          <td>
+            <input type="text" name="temp[]" size="5" maxlength="6" value="0" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+    <b>b) Escull les unitats de temperatura del resultat:</b><br />
+    <input name="ut[]" value="celsius" type="checkbox" checked />Graus Celsius
+    (ºC)<br />
+    <input name="ut[]" value="fahrenheit" type="checkbox" />Graus Fahrenheit
+    (ºF)<br />
+    <input name="ut[]" value="kelvins" type="checkbox" />Kelvins (K)<br />
+    <br />
+    <button onclick="fCalcula()">Calcula mitjanes</button>
+    <button onclick="fNeteja()">Neteja dades</button>
+    <p><b>RESULTATS:</b></p>
+    <p id="resultats"></p>
+    <button onclick="fReinicia()">Neteja resultats</button>
+    <script>
+      let llistaTemp = document.getElementsByName("temp[]");
+      let form = document.getElementsByName("ut[]");
+
+        function fCalcula() {
+          let suma = 0;
+          let mitjana = 0;
+          let fahrenheit = 0;
+          let kelvins = 0;
+          let resultat = "";
+
+          for (let i = 0; i < form.length; i++) {
+            let seleccio = form[i].value; 
+            for (let x = 0; x < llistaTemp.length; x++) {
+                          suma += parseInt(llistaTemp[x].value);
+                      }
+                
+              if (form[i].checked) {
+                  if (seleccio == "celsius"){
+                      mitjana = suma / llistaTemp.length;
+
+                      resultat += `La mitjana en graus Celsius és ${mitjana.toFixed(1)}</br>`;
+                      suma = 0;
+                      mitjana = 0;
+
+                  } else if (seleccio == "fahrenheit"){
+                      mitjana = suma / llistaTemp.length;
+                      fahrenheit = ((9 * mitjana) / 5) + 32;
+                      resultat += `La mitjana en graus Fahrenheit és ${fahrenheit.toFixed(1)}</br>`;
+                      suma = 0;
+                      mitjana = 0;
+                      
+                  } else if (seleccio == "kelvins"){
+                      mitjana = suma / llistaTemp.length;
+                      kelvins = 273 + mitjana;
+                      resultat += `La mitjana en graus Kelvins és ${kelvins.toFixed(1)}`;
+                      suma = 0;
+                      mitjana = 0;
+        }
+        document.getElementById("resultats").innerHTML = `${resultat}`;
+      }
+    }
+  }
+
+        function fNeteja() {
+          for (let x = 0; x < llistaTemp.length; x++) {
+              llistaTemp[x].value=0;            
+          }
+        }
+
+        function fReinicia() {
+            document.getElementById("resultats").innerHTML = "";
+            form[0].checked = true; 
+            form[1].checked = false; 
+            form[2].checked = false;
+        }
+
+    </script>
+  </body>
+</html>
